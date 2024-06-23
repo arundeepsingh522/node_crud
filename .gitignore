@@ -1,0 +1,8 @@
+# Dependency directory
+node_modules/
+
+# Log files
+*.log
+
+# Log directories
+logs/
