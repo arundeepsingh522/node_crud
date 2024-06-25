@@ -4,15 +4,16 @@ const multer = require("multer");
 const {User} = require("../db");
 const router = express.Router();
 
-//const router = express.Router();
+
 
 //const uploads = multer({ storage });
 
-router.get("/add",  async (req, res) => {
+router.post("/add",  async (req, res) => {
   try {
     const { name, email, phone } = req.body;
-    const { file_name } = req.file;
+    //const { file_name } = req.file;
 
+    console.log('name',name,'email',email,'phone',phone);
     //validations
 
     const user = new User({
@@ -36,14 +37,16 @@ router.get("/add",  async (req, res) => {
   }
 });
 
+router.get('/',async(req,res)=>{
+  console.log('hello');
 
-router.get('/',(req,res)=>{
+  try{
+res.render('index')
+  }catch(error)
+  {
 
-    res.status(200).json({
-        'message':2007
-
-    });
-
+  }
+  //res.status(200).json({message:'ok'});
 })
 
 module.exports = router;

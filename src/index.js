@@ -1,5 +1,5 @@
 //App Entry file
-console.log(4);
+
 //requiring modules
 require("dotenv").config();
 const express = require("express");
@@ -15,7 +15,12 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./src/uploads"));
+//serving static files
+
+
+console.log('current dir name ',);
+app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path))
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -26,6 +31,7 @@ app.use(
 app.use("/", routes);
 //set
 app.set("view engine", "ejs");
+app.set("views", "../src/views");
 //
 app.listen(PORT, async () => {
   console.log(`server is runnung at ${PORT}`);
