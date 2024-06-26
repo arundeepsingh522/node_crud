@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./src/index.js",
-    "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./public/css/tailwind.css --watch"
+    "start": "nodemon ./src/index.js"
   },
   "author": "arundeep",
   "license": "ISC",
@@ -21,10 +20,5 @@
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.3",
     "multer": "^1.4.5-lts.1"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.4"
   }
 }

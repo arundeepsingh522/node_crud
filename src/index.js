@@ -6,6 +6,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const routes = require("./routes/routes");
+const path = require('path');
 
 const connectToDb = require("../src/db");
 const User = require("../src/models/user");
@@ -18,9 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 //serving static files
 
 
-console.log('current dir name ',);
+console.log('current dir name ',__dirname);
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.static(path))
+app.use(express.static(path.join(__dirname,'uploads')))
+console.log('test',express.static(path.join(__dirname,'uploads')));
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -31,7 +33,7 @@ app.use(
 app.use("/", routes);
 //set
 app.set("view engine", "ejs");
-app.set("views", "../src/views");
+app.set("views", path.join(__dirname,'views'));
 //
 app.listen(PORT, async () => {
   console.log(`server is runnung at ${PORT}`);
