@@ -46,4 +46,11 @@ router.get("/", async (req, res) => {
   //res.status(200).json({message:'ok'});
 });
 
+
+router.get("/add_user",async(req,res)=>{
+
+  res.render("add_user");
+
+});
+
 module.exports = router;

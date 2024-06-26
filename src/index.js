@@ -30,6 +30,15 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use((req,res,next)=>{
+  console.log('req.session',req.session);
+  console.log('res local before',res.locals);
+  res.locals.message = req.session.message;
+  console.log('res local after',res.locals);
+
+  delete req.session.message;
+  next();
+})
 app.use("/", routes);
 //set
 app.set("view engine", "ejs");

@@ -1,66 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Node CRUD Application</title>
+
     <!-- Include any CSS or other head elements here -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
     <nav class="bg-gray-800 p-4">
-        <div class="container mx-auto">
-            <div class="flex items-center justify-between">
-                <div class="text-white text-lg font-semibold">
-                    Node CRUD Application
-                </div>
-            </div>
+      <div class="container mx-auto">
+        <div class="flex items-center justify-between">
+          <div class="text-white text-lg font-semibold flex items-center">
+            <i class="fas fa-code text-2xl mr-2"></i>
+            <!-- Icon for the app/logo -->
+            Node CRUD Application
+          </div>
+          <ul class="flex">
+            <li class="mr-4">
+              <a
+                href="/"
+                class="text-white hover:text-gray-300 flex items-center"
+              >
+                <i class="fas fa-home mr-1"></i>
+                <!-- Home icon -->
+                Home
+              </a>
+            </li>
+            <li class="mr-4">
+              <a
+                href="/add_user"
+                class="text-white hover:text-gray-300 flex items-center"
+              >
+                <i class="fas fa-user-plus mr-1"></i>
+                <!-- Add User icon -->
+                Add User
+              </a>
+            </li>
+            <li class="mr-4">
+              <a
+                href="/about"
+                class="text-white hover:text-gray-300 flex items-center"
+              >
+                <i class="fas fa-info-circle mr-1"></i>
+                <!-- About icon -->
+                About
+              </a>
+            </li>
+            <li class="mr-4">
+              <a
+                href="/contact"
+                class="text-white hover:text-gray-300 flex items-center"
+              >
+                <i class="fas fa-envelope mr-1"></i>
+                <!-- Contact icon -->
+                Contact
+              </a>
+            </li>
+            <!-- Add more navigation items as needed -->
+          </ul>
         </div>
+      </div>
     </nav>
 
     <div class="container mx-auto mt-8">
-        <% if (message) { %>
-        <div class="bg-<%= message.type === 'success' ? 'green-500' : 'red-500' %> text-white p-4 mb-4 rounded" role="alert">
-            <button class="float-right text-white" type="button" aria-label="Close" onclick="this.parentElement.style.display='none';">&times;</button>
-            <strong><%= message.message %></strong>
-        </div>
-        <% } %>
+      <% if (message) { %>
+      <div
+        class="bg-<%= message.type === 'success' ? 'green-500' : 'red-500' %> text-white p-4 mb-4 rounded"
+        role="alert"
+      >
+        <button
+          class="float-right text-white"
+          type="button"
+          aria-label="Close"
+          onclick="this.parentElement.style.display='none';"
+        >
+          &times;
+        </button>
+        <strong><%= message.message %></strong>
+      </div>
+      <% } %>
 
-        <div class="overflow-x-auto mx-4">
-            <% if (users && users.length > 0) { %>
-            <table id="dataTable" class="min-w-full bg-white shadow-md rounded-lg text-center">
-                <thead>
-                    <tr class="bg-gray-800 text-white">
-                        <th class="py-2 px-4 border-b">ID</th>
-                        <th class="py-2 px-4 border-b">Images</th>
-                        <th class="py-2 px-4 border-b">Name</th>
-                        <th class="py-2 px-4 border-b">E-mail</th>
-                        <th class="py-2 px-4 border-b">Phone</th>
-                        <th class="py-2 px-4 border-b">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% users.forEach((row, index) => { %>
-                    <tr class="bg-white border-b hover:bg-gray-100">
-                        <td class="py-2 px-4"><%= index + 1 %></td>
-                        <td class="py-2 px-4"><img src="<%= row.image %>" width="80" class="rounded-full" /></td>
-                        <td class="py-2 px-4"><%= row.name %></td>
-                        <td class="py-2 px-4"><%= row.email %></td>
-                        <td class="py-2 px-4"><%= row.phone %></td>
-                        <td class="py-2 px-4">
-                            <a href="/edit/<%= row._id %>" class="text-green-600 hover:text-green-800"> <i class="fas fa-edit fa-lg mx-1"></i></a>
-                            <a href="/delete/<%= row._id %>" class="text-red-600 hover:text-red-800"><i class="fas fa-trash fa-lg mx-1"></i></a>
-                        </td>
-                    </tr>
-                    <% }); %>
-                </tbody>
-            </table>
-            <% } else { %>
-            <h1 class="text-center text-gray-600 mt-5">No users in the database</h1>
-            <% } %>
-        </div>
+      <div class="overflow-x-auto mx-4">
+        <% if (users && users.length > 0) { %>
+        <table
+          id="dataTable"
+          class="min-w-full bg-white shadow-md rounded-lg text-center"
+        >
+          <thead>
+            <tr class="bg-gray-800 text-white">
+              <th class="py-2 px-4 border-b">ID</th>
+              <th class="py-2 px-4 border-b">Images</th>
+              <th class="py-2 px-4 border-b">Name</th>
+              <th class="py-2 px-4 border-b">E-mail</th>
+              <th class="py-2 px-4 border-b">Phone</th>
+              <th class="py-2 px-4 border-b">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach((row, index) => { %>
+            <tr class="bg-white border-b hover:bg-gray-100">
+              <td class="py-2 px-4"><%= index + 1 %></td>
+              <td class="py-2 px-4">
+                <img src="<%= row.image %>" width="80" class="rounded-full" />
+              </td>
+              <td class="py-2 px-4"><%= row.name %></td>
+              <td class="py-2 px-4"><%= row.email %></td>
+              <td class="py-2 px-4"><%= row.phone %></td>
+              <td class="py-2 px-4">
+                <a
+                  href="/edit/<%= row._id %>"
+                  class="text-green-600 hover:text-green-800"
+                >
+                  <i class="fas fa-edit fa-lg mx-1"></i
+                ></a>
+                <a
+                  href="/delete/<%= row._id %>"
+                  class="text-red-600 hover:text-red-800"
+                  ><i class="fas fa-trash fa-lg mx-1"></i
+                ></a>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <% } else { %>
+        <h1 class="text-center text-gray-600 mt-5">No users in the database</h1>
+        <% } %>
+      </div>
     </div>
 
     <!-- Include any JavaScript or other scripts here -->
-</body>
+  </body>
 </html>
