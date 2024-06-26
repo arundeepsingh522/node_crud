@@ -1,19 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const {User} = require("../db");
+const { User } = require("../db");
 const router = express.Router();
-
-
 
 //const uploads = multer({ storage });
 
-router.post("/add",  async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     const { name, email, phone } = req.body;
     //const { file_name } = req.file;
 
-    console.log('name',name,'email',email,'phone',phone);
+    console.log("name", name, "email", email, "phone", phone);
     //validations
 
     const user = new User({
@@ -22,7 +20,7 @@ router.post("/add",  async (req, res) => {
       phone,
       image: file_name,
     });
-    console.log('user data',user);
+    console.log("user data", user);
     await user.save().exec();
     res.status(200).json({
       type: "Succes",
@@ -37,16 +35,15 @@ router.post("/add",  async (req, res) => {
   }
 });
 
-router.get('/',async(req,res)=>{
-  console.log('hello');
-
-  try{
-res.render('index')
-  }catch(error)
-  {
-
+router.get("/", async (req, res) => {
+  try {
+    const users=[];
+    const message=null;
+    res.render("index", { users,message });
+  } catch (error) {
+    console.log("error in Home Controller", error);
   }
   //res.status(200).json({message:'ok'});
-})
+});
 
 module.exports = router;
