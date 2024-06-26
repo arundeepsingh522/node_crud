@@ -53,4 +53,18 @@ router.get("/add_user",async(req,res)=>{
 
 });
 
+
+router.post('add-user',async (req,res)=>{
+
+  try{
+
+    console.log('inside add user');
+
+  }catch(error)
+  {
+    console.log("error in add user controller",error);
+  }
+
+});
+
 module.exports = router;
