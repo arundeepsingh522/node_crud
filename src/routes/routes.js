@@ -2,44 +2,84 @@ const express = require("express");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const { User } = require("../db");
+const path = require('path');
+const fs = require('fs');
 const router = express.Router();
 
-const uploads = multer({ storage });
+const uploadsDir = path.join("/src/uploads");
+console.log("==>>>>", uploadsDir);
 
-router.post("/add", async (req, res) => {
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+  console.log("==>>>>", uploadsDir);
+}
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadsDir);
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const uploads = multer({ storage });
+router.post('/add', uploads.single('myFile'), async (req, res) => {
   try {
     const { name, email, phone } = req.body;
-    //const { file_name } = req.file;
-    console.log('inside add controller');
+    const file = req.file;
+    console.log('Inside add controller');
+    console.log('Name:', name, 'Email:', email, 'Phone:', phone);
+    // Validations
+    if (!name || !email || !phone) {
+      req.session.message = {
+        type: 'danger',
+        message: 'Please provide all required fields'
+      };
+      return res.redirect('/');
+    }
 
- //   res.render('/')
+    if (file) {
+      console.log('File uploaded:', file);
+    }
 
-    console.log("name", name, "email", email, "phone", phone);
-    //validations
-
+    // Create a new user instance
     const user = new User({
       name,
       email,
       phone,
-      
+      image: file ? file.path : null // Save the file path if a file is uploaded
     });
-    console.log("user data", user);
-    await user.save().exec();
-    req.session.message=
-      {type:'succes',
-        message:'User added Succesfully'};
-    res.render('/');
-  } catch (error) {
-    console.log("error in adding user controller", error);
+
+    console.log('User data:', user);
+    await user.save();
 
     req.session.message = {
-      type:'danger',
-      message:'Error in adding user'
-    
-    }
+      type: 'success',
+      message: 'User added successfully'
+    };
 
+    res.status(200).json({
+      message:'ok'
+    });
 
-    
+    res.redirect('/');
+  } catch (error) {
+    console.log('Error in adding user controller', error);
+
+    req.session.message = {
+      type: 'danger',
+      message: 'Error in adding user'
+    };
+
+    res.redirect('/');
+    res.status(500).json({
+      message:'internal server error'
+    });
   }
 });
 
